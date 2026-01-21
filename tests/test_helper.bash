@@ -110,6 +110,19 @@ This is a test rule.
 EOF
 }
 
+# Create a fake hook file
+create_fake_hook() {
+    local name="$1"
+    local location="${2:-$FAKE_REPO/hooks}"
+
+    mkdir -p "$location"
+    cat > "$location/$name.sh" << 'EOF'
+#!/bin/bash
+echo "test hook"
+EOF
+    chmod +x "$location/$name.sh"
+}
+
 # Create settings.json
 create_fake_settings() {
     local location="${1:-$FAKE_REPO}"

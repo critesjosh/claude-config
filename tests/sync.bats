@@ -133,6 +133,42 @@ teardown() {
 }
 
 # =============================================================================
+# Add Hook Tests
+# =============================================================================
+
+@test "sync.sh add hook copies to repo and creates symlink" {
+    create_fake_hook "my-hook" "$FAKE_HOME/.claude/hooks"
+
+    run_sync add hook my-hook
+
+    assert_regular_file "$FAKE_REPO/hooks/my-hook.sh"
+    assert_symlink "$FAKE_HOME/.claude/hooks/my-hook.sh" "$FAKE_REPO/hooks/my-hook.sh"
+}
+
+@test "sync.sh add hook creates backup" {
+    create_fake_hook "my-hook" "$FAKE_HOME/.claude/hooks"
+    run_sync add hook my-hook
+    assert_backup_exists
+    assert_manifest_operation "add-hook"
+}
+
+@test "sync.sh remove hook removes from repo but keeps local" {
+    create_fake_hook "my-hook"
+    run_install
+
+    # Verify it's synced
+    assert_symlink "$FAKE_HOME/.claude/hooks/my-hook.sh" "$FAKE_REPO/hooks/my-hook.sh"
+
+    run_sync remove hook my-hook
+
+    # Should be removed from repo
+    [[ ! -f "$FAKE_REPO/hooks/my-hook.sh" ]]
+
+    # Should exist locally as regular file
+    assert_regular_file "$FAKE_HOME/.claude/hooks/my-hook.sh"
+}
+
+# =============================================================================
 # Remove Skill Tests
 # =============================================================================
 

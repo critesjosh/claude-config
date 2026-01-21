@@ -137,10 +137,11 @@ show_dir_status() {
 # Show status for a file-based item (agents, rules)
 show_file_status() {
     local type="$1"
+    local ext="${2:-.md}"
     local local_dir="$HOME/.claude/$type"
     local repo_dir="$CONFIG_DIR/$type"
 
-    for item in "$local_dir"/*.md; do
+    for item in "$local_dir"/*"$ext"; do
         [ -f "$item" ] || continue
         item_name=$(basename "$item")
         item_path="$local_dir/$item_name"
@@ -191,6 +192,14 @@ show_status() {
     fi
     echo ""
 
+    echo -e "${BOLD}Hooks:${RESET}"
+    if [ -d "$HOME/.claude/hooks" ] && ls "$HOME/.claude/hooks"/*.sh &>/dev/null; then
+        show_file_status "hooks" ".sh"
+    else
+        echo "  (none)"
+    fi
+    echo ""
+
     echo "Legend: ✓ synced | ○ local only | ⚠ conflict | → external"
     echo ""
     echo "Usage:"
@@ -205,7 +214,7 @@ show_status() {
     echo "Options:"
     echo "  -n, --dry-run                   Show what would be done"
     echo ""
-    echo "Types: skill, agent, rule"
+    echo "Types: skill, agent, rule, hook"
 }
 
 add_skill() {
@@ -259,8 +268,9 @@ add_skill() {
 add_file() {
     local type="$1"
     local name="$2"
-    local src="$HOME/.claude/$type/$name.md"
-    local dest="$CONFIG_DIR/$type/$name.md"
+    local ext="${3:-.md}"
+    local src="$HOME/.claude/$type/$name$ext"
+    local dest="$CONFIG_DIR/$type/$name$ext"
 
     if [ ! -f "$src" ]; then
         echo "Error: ${type%s} not found at $src"
@@ -337,8 +347,9 @@ remove_skill() {
 remove_file() {
     local type="$1"
     local name="$2"
-    local src="$HOME/.claude/$type/$name.md"
-    local dest="$CONFIG_DIR/$type/$name.md"
+    local ext="${3:-.md}"
+    local src="$HOME/.claude/$type/$name$ext"
+    local dest="$CONFIG_DIR/$type/$name$ext"
 
     if [ ! -f "$dest" ]; then
         echo "Error: ${type%s} '$name' not in repo"
@@ -581,23 +592,25 @@ case "${1:-}" in
     add)
         type="${2:-}"
         name="${3:-}"
-        [ -z "$type" ] || [ -z "$name" ] && { echo "Usage: ./sync.sh add <type> <name>"; echo "Types: skill, agent, rule"; exit 1; }
+        [ -z "$type" ] || [ -z "$name" ] && { echo "Usage: ./sync.sh add <type> <name>"; echo "Types: skill, agent, rule, hook"; exit 1; }
         case "$type" in
             skill)  add_skill "$name" ;;
             agent)  add_file "agents" "$name" ;;
             rule)   add_file "rules" "$name" ;;
-            *)      echo "Unknown type: $type (use: skill, agent, rule)"; exit 1 ;;
+            hook)   add_file "hooks" "$name" ".sh" ;;
+            *)      echo "Unknown type: $type (use: skill, agent, rule, hook)"; exit 1 ;;
         esac
         ;;
     remove)
         type="${2:-}"
         name="${3:-}"
-        [ -z "$type" ] || [ -z "$name" ] && { echo "Usage: ./sync.sh remove <type> <name>"; echo "Types: skill, agent, rule"; exit 1; }
+        [ -z "$type" ] || [ -z "$name" ] && { echo "Usage: ./sync.sh remove <type> <name>"; echo "Types: skill, agent, rule, hook"; exit 1; }
         case "$type" in
             skill)  remove_skill "$name" ;;
             agent)  remove_file "agents" "$name" ;;
             rule)   remove_file "rules" "$name" ;;
-            *)      echo "Unknown type: $type (use: skill, agent, rule)"; exit 1 ;;
+            hook)   remove_file "hooks" "$name" ".sh" ;;
+            *)      echo "Unknown type: $type (use: skill, agent, rule, hook)"; exit 1 ;;
         esac
         ;;
     pull)

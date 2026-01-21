@@ -61,6 +61,12 @@ teardown() {
     assert_symlink "$FAKE_HOME/.claude/rules/test-rule.md" "$FAKE_REPO/rules/test-rule.md"
 }
 
+@test "install.sh symlinks hooks" {
+    create_fake_hook "test-hook"
+    run_install
+    assert_symlink "$FAKE_HOME/.claude/hooks/test-hook.sh" "$FAKE_REPO/hooks/test-hook.sh"
+}
+
 # =============================================================================
 # Dry Run Tests
 # =============================================================================

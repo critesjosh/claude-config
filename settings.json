@@ -7,17 +7,31 @@
     "deny": []
   },
   "hooks": {
-    "Notification": [
+    "Stop": [
       {
-        "matcher": "permission_prompt",
         "hooks": [
           {
             "type": "command",
-            "command": "/home/josh/.local/bin/claude-notify.sh"
+            "command": "/home/josh/.claude/hooks/notify-done.sh"
+          }
+        ]
+      }
+    ],
+    "Notification": [
+      {
+        "matcher": "idle_prompt",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "notify-send 'Claude Code' 'Awaiting your input' -u normal -t 5000"
           }
         ]
       }
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh"
   },
   "enabledPlugins": {
     "code-documentation@claude-code-workflows": true,
@@ -29,14 +43,9 @@
     "code-review@claude-plugins-official": true,
     "pr-review-toolkit@claude-plugins-official": true,
     "linear@claude-plugins-official": false,
-    "ralph-wiggum-marketer@ralph-wiggum-marketer": true,
     "compound-engineering@every-marketplace": true,
     "typescript-lsp@claude-plugins-official": true,
     "aztec@aztec-plugins": true
   },
-  "alwaysThinkingEnabled": true,
-  "statusLine": {
-    "type": "command",
-    "command": "~/.claude/statusline.sh"
-  }
+  "alwaysThinkingEnabled": true
 }

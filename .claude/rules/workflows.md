@@ -34,7 +34,7 @@ Use `--force` to automatically use repo versions (still creates backups).
 ./sync.sh
 ```
 
-Shows status grouped by type (Skills, Agents, Rules):
+Shows status grouped by type (Skills, Agents, Rules, Hooks):
 
 - `✓` synced (symlinked to this repo)
 - `○` local only (not in repo)
@@ -47,6 +47,7 @@ Shows status grouped by type (Skills, Agents, Rules):
 ./sync.sh add skill <name>   # Add a skill directory
 ./sync.sh add agent <name>   # Add an agent file (without .md extension)
 ./sync.sh add rule <name>    # Add a rule file (without .md extension)
+./sync.sh add hook <name>    # Add a hook file (without .sh extension)
 ./sync.sh push
 ```
 
@@ -60,6 +61,7 @@ Skills are validated before adding - must have SKILL.md with `name` and `descrip
 ./sync.sh remove skill <name>
 ./sync.sh remove agent <name>
 ./sync.sh remove rule <name>
+./sync.sh remove hook <name>
 ./sync.sh push
 ```
 
@@ -115,6 +117,7 @@ Use this for work-specific or experimental items.
 ├── skills/          # Skill directories (each has SKILL.md)
 ├── agents/          # Subagent markdown files
 ├── rules/           # Rule markdown files
+├── hooks/           # Hook shell scripts
 ├── settings.json
 └── statusline.sh
 ```

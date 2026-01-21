@@ -1,6 +1,6 @@
 # Claude Config
 
-Personal Claude Code settings, skills, agents, and rules, synced across machines via symlinks.
+Personal Claude Code settings, skills, agents, rules, and hooks, synced across machines via symlinks.
 
 ## Commands
 
@@ -18,7 +18,7 @@ Personal Claude Code settings, skills, agents, and rules, synced across machines
 bats tests/               # Run tests
 ```
 
-Types: `skill`, `agent`, `rule`
+Types: `skill`, `agent`, `rule`, `hook`
 
 ## Testing
 
