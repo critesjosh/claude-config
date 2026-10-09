@@ -30,6 +30,9 @@ for ((i=0; i<empty; i++)); do bar+="░"; done
 # Get directory name (basename)
 dir_name=$(basename "$current_dir")
 
+# Get system hostname
+host_name=$(hostname -s 2>/dev/null || echo "${HOSTNAME:-unknown}")
+
 # Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -75,4 +78,4 @@ fi
 context_info="${GRAY}${bar}${NC} ${context_percent}%"
 
 # Output the status line
-echo -e "${BLUE}${dir_name}${NC} ${GRAY}|${NC} ${CYAN}${model_name}${NC} ${GRAY}|${NC} ${context_info}${git_info:+ ${GRAY}|${NC}}${git_info}"
+echo -e "${GREEN}${host_name}${NC} ${GRAY}|${NC} ${BLUE}${dir_name}${NC} ${GRAY}|${NC} ${CYAN}${model_name}${NC} ${GRAY}|${NC} ${context_info}${git_info:+ ${GRAY}|${NC}}${git_info}"

@@ -4,48 +4,80 @@
       "Bash(gh:*)",
       "Bash(git:*)"
     ],
-    "deny": []
+    "deny": [],
+    "defaultMode": "auto"
   },
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/home/josh/.claude/hooks/notify-done.sh"
-          }
-        ]
-      }
-    ],
-    "Notification": [
-      {
-        "matcher": "idle_prompt",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "notify-send 'Claude Code' 'Awaiting your input' -u normal -t 5000"
-          }
-        ]
-      }
-    ]
-  },
+  "model": "opus",
   "statusLine": {
     "type": "command",
-    "command": "~/.claude/statusline.sh"
+    "command": "bash /home/josh/.claude/statusline.sh"
   },
   "enabledPlugins": {
-    "code-documentation@claude-code-workflows": true,
-    "debugging-toolkit@claude-code-workflows": true,
-    "documentation-generation@claude-code-workflows": true,
-    "frontend-design@claude-plugins-official": true,
+    "code-documentation@claude-code-workflows": false,
+    "debugging-toolkit@claude-code-workflows": false,
+    "documentation-generation@claude-code-workflows": false,
+    "frontend-design@claude-plugins-official": false,
     "context7@claude-plugins-official": true,
     "github@claude-plugins-official": false,
     "code-review@claude-plugins-official": true,
-    "pr-review-toolkit@claude-plugins-official": true,
     "linear@claude-plugins-official": false,
-    "compound-engineering@every-marketplace": true,
+    "compound-engineering@every-marketplace": false,
     "typescript-lsp@claude-plugins-official": true,
-    "aztec@aztec-plugins": true
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "typesafe@typesafe-ai": true,
+    "cc-plugin-you-should-know@builtin": true
   },
-  "alwaysThinkingEnabled": true
+  "extraKnownMarketplaces": {
+    "typesafe-ai": {
+      "source": {
+        "source": "github",
+        "repo": "typesafe-ai/skills"
+      }
+    }
+  },
+  "alwaysThinkingEnabled": true,
+  "effortLevel": "high",
+  "modelSettings": {
+    "claude-opus-5": {
+      "effortLevel": "medium"
+    },
+    "claude-sonnet-5": {
+      "effortLevel": "medium"
+    }
+  },
+  "voice": {
+    "enabled": false,
+    "mode": "hold"
+  },
+  "agentPushNotifEnabled": false,
+  "skipAutoPermissionPrompt": true,
+  "autoMode": {
+    "environment": [
+      "### Org-wide",
+      "**Organization**: None configured",
+      "**Cloud provider(s)**: None configured",
+      "**Repository visibility**: Private — critesjosh/fde-curriculum (github.com)",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: None configured",
+      "**Default / protected branches**: main (default); no branch protection rules or rulesets listed for critesjosh/fde-curriculum",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: None configured",
+      "**Host containment**: None configured — assume Claude Code runs on an ordinary developer machine or CI runner with open internet",
+      "**Source control**: The trusted repo (critesjosh/fde-curriculum, github.com:critesjosh/fde-curriculum.git) and its remote(s) only (no additional orgs configured)",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: None configured",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: any file or store holding personal data, confidential business data, credentials, regulated data, or similarly sensitive material; preserve exact handles when known and share only with audiences cleared at the [named+specifics] bar",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment (hyphen/underscore/dot-delimited)",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development",
+      "**Trusted repo**: /home/josh/sandbox/fde-curriculum (critesjosh/fde-curriculum), private repo, remote github.com:critesjosh/fde-curriculum.git — confidential material may be committed here, but content ported from outside this session's repo is not this repo's own work",
+      "**Org-specific CLIs**: None configured"
+    ]
+  },
+  "voiceEnabled": false
 }
